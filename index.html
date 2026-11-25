@@ -144,6 +144,8 @@ button:disabled{opacity:.5;cursor:default}
 .rev .e{margin-top:8px;font-size:.9rem;color:var(--ink-2);padding-left:14px;border-left:2px solid var(--line-2)}
 .rev .e i{color:var(--muted);font-style:normal;font-size:.8rem}
 .hint{font-size:.8rem;color:var(--muted);margin-top:30px;text-align:center}
+.notice{font-size:.86rem;color:var(--ink-2);background:var(--warn-bg);border:1px solid var(--warn-line);border-left:3px solid var(--gold);border-radius:8px;padding:10px 14px;margin:-8px 0 24px}
+.notice b{color:var(--ink);font-weight:600}
 label.tog{display:flex;gap:8px;align-items:center;font-size:.88rem;color:var(--ink-2);cursor:pointer}
 label.tog input{accent-color:var(--navy);width:16px;height:16px}
 .hidden{display:none}
@@ -230,6 +232,7 @@ function home(){
       <div class="fig"><b>${total}</b><span>Questions</span></div>
       <div class="fig"><b>${passed}<small style="font-size:1.2rem;color:var(--muted)">/${secs.length}</small></b><span>Passed</span></div>
     </div></header>
+  <div class="notice" role="note"><b>For practice only.</b> Every question here is an original sample question written for revision. None are taken from, or represent, the official ITIL® Foundation (Version 5) exam.</div>
   <div class="toolbar">
     <label class="tog"><input type="checkbox" id="pShuf" ${prefs.shuffleQ ? 'checked' : ''}> Shuffle question order</label>
     <label class="tog"><input type="checkbox" id="pTime" ${prefs.timer ? 'checked' : ''}> One-minute timer</label>
@@ -247,7 +250,8 @@ function home(){
       <div class="row"><button class="primary" data-start="${s.n}">Begin</button><button data-study="${s.n}">Study answers</button></div></div>`;
   });
   html += `</div><p class="hint">Press 1–4 or A–D to answer and Enter to continue. Scores are saved in this browser only. ·
-  <button id="reset" class="ghost" style="font-size:.8rem;padding:2px 4px;text-decoration:underline">Reset scores</button></p>`;
+  <button id="reset" class="ghost" style="font-size:.8rem;padding:2px 4px;text-decoration:underline">Reset scores</button></p>
+  <p class="hint" style="margin-top:6px">Sample questions for practice only; none are from the official exam. Not affiliated with or endorsed by PeopleCert. ITIL® is a registered trademark of PeopleCert.</p>`;
   app.innerHTML = html;
   app.querySelectorAll('[data-start]').forEach(b => b.onclick = () => start(+b.dataset.start));
   app.querySelectorAll('[data-study]').forEach(b => b.onclick = () => study(+b.dataset.study));
