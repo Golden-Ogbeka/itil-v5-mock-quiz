@@ -1,6 +1,6 @@
 # ITIL® Foundation (Version 5) Mock Quiz
 
-A free, browser-based practice quiz for the **ITIL® Foundation (Version 5)** exam. It has 17 timed sections of 40 multiple-choice questions each (680 questions in total), and explains every answer.
+A free, browser-based mock exam for the **ITIL® Foundation (Version 5)** exam. It has 17 timed sections of 40 multiple-choice questions each (680 questions in total). Each section runs as an exam simulation laid out like the live online exam, followed by a full answer review with explanations. It works on desktop and mobile.
 
 > [!IMPORTANT]
 > **For practice only.** Every question in this quiz is an original sample question written for revision. None are taken from, or represent, the official ITIL® Foundation (Version 5) exam, and a good score here does not guarantee a pass on the real exam.
@@ -8,15 +8,22 @@ A free, browser-based practice quiz for the **ITIL® Foundation (Version 5)** ex
 ## Features
 
 - **17 sections × 40 questions**, grouped by syllabus topic.
-- **One-minute timer per question.** If time runs out, the question counts as unanswered.
-- **Instant feedback:** after every answer you see whether you were right, the correct answer, and a short explanation of why.
-- **Results screen:** your score out of 40, pass/fail against the 65% pass mark (26 of 40, as in the real exam), and a full review of every question.
-- **Retake any section** as often as you like, or practise only the questions you got wrong.
-- **Mock exam mode:** 40 random questions drawn from all sections.
-- **Study answers mode:** read all 40 questions and answers in a section before testing yourself.
+- **Exam simulation, modelled on the live online exam:**
+  - an exam information screen before you start
+  - a 60-minute countdown for 40 questions, shown in the top right
+  - a question menu on the left, with the current question highlighted and a flag icon next to each number (amber when flagged)
+  - Previous / Next buttons, a "Flag for review" button and text-size controls
+  - a reminder when 15 minutes are left, and automatic submission when time runs out
+  - **End Exam** (bottom right), with a warning about unanswered and flagged questions
+- **Show correct answer after each question** (on by default): once you answer, the question locks, the correct answer is highlighted, and an explanation of why appears straight away. A running "correct so far" count appears at the bottom. Turn it off on the home page or the exam information screen for a strict simulation where answers are only revealed at the end, like the real exam.
+- **Results:** a provisional result sheet (pass/fail, score, pass mark of 26/40, questions answered, time used) that you can print, followed by a full review of every question with the correct answer and an explanation.
+- **Retake any section** as often as you like, or retake only the questions you got wrong.
+- **Full mock exam:** 40 random questions from all sections.
+- **Study:** read all 40 questions and answers in a section before you sit the exam.
 - **Shuffled questions and answers** on every attempt (shuffling questions can be turned off).
+- **Mobile friendly:** on phones the question menu becomes a scrollable strip of numbers, and the buttons are sized for touch.
 - **Light and dark mode**, with soft colours that are easy on the eyes.
-- **Keyboard shortcuts:** press 1–4 or A–D to answer, and Enter to continue.
+- **Keyboard shortcuts:** 1–4 or A–D to answer, ← / → to move between questions, F to flag, Enter to go to the next question after seeing the answer.
 - Scores and theme are saved in your own browser only. There is no account, server or tracking.
 
 ## Getting started
