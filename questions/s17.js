@@ -139,7 +139,7 @@ QB.add(17, "Syllabus gap-filler: every criterion covered", "Extra questions on t
  ["It is needed only for AI built in-house","It is only about the cost of AI tools","It replaces corporate governance"],
  "AI governance directs, controls and monitors AI use so AI-enabled products and services create value responsibly.",
  "Syllabus 6.2.1"],
-["Which ITIL activity of AI governance would ensure a chatbot’s answers are checked regularly for bias and accuracy?",
+["Which part of AI governance makes sure a chatbot’s answers are regularly checked for bias and accuracy?",
  "Monitoring AI use and its unintended consequences",
  ["Removing all human oversight","Approving the chatbot once and never reviewing it","Outsourcing accountability to the vendor"],
  "AI governance includes monitoring AI use. The AI Capability Model stresses continuous oversight of performance, bias and unintended consequences.",

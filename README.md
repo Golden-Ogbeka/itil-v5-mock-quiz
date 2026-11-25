@@ -14,17 +14,24 @@ A free, browser-based mock exam for the **ITIL® Foundation (Version 5)** exam. 
   - a question menu on the left, with the current question highlighted and a flag icon next to each number (amber when flagged)
   - Previous / Next buttons, a "Flag for review" button and text-size controls
   - a reminder when 15 minutes are left, and automatic submission when time runs out
-  - **End Exam** (bottom right), with a warning about unanswered and flagged questions
+  - **End Exam** (bottom right) opens a **review screen** first: a tile for every question showing answered, unanswered and flagged, with filters, so you can jump back before you submit
+  - **Resume after closing:** if you close or refresh the page mid-exam, your answers, flags and remaining time are saved with the timer paused. Resume or discard it from the home page. "Exit" also offers *Save and exit*.
 - **Show correct answer after each question** (on by default): once you answer, the question locks, the correct answer is highlighted, and an explanation of why appears straight away. A running "correct so far" count appears at the bottom. Turn it off on the home page or the exam information screen for a strict simulation where answers are only revealed at the end, like the real exam.
 - **Results:** a provisional result sheet (pass/fail, score, pass mark of 26/40, questions answered, time used) that you can print, followed by a full review of every question with the correct answer and an explanation.
 - **Retake any section** as often as you like, or retake only the questions you got wrong.
 - **Full mock exam:** 40 random questions from all sections.
+- **Weak-topic tracker:** every answer is tracked against the 21 syllabus topics (1.1 to 7.2). The home page shows your five weakest topics, and the *All topics* page shows your accuracy for every topic against the 65% pass line. Each topic has a **Practise** button for a timed exam of up to 40 questions on that topic.
+- **Review queue:** questions you get wrong or flag are added to a review queue. **Start review exam** builds an exam from them, and a question leaves the queue once you answer it correctly twice in a row.
+- **Score history:** a chart of your recent scores against the 65% pass line (hover over a point for details), plus a full table of every attempt.
+- **Flashcards:** 69 cards for the key terms and definitions, filterable by syllabus category. Tap to flip, then mark *Knew it* or *Didn't know*. Missed cards come back later in the round. Keyboard: Space to flip, K / D to mark.
+- **Search:** search all 680 questions, answers and explanations for any term, with matches highlighted.
 - **Study:** read all 40 questions and answers in a section before you sit the exam.
+- **Installable and works offline:** when served over the web (for example on GitHub Pages), you can install it to your phone's home screen or your desktop, and it keeps working without an internet connection.
 - **Shuffled questions and answers** on every attempt (shuffling questions can be turned off).
 - **Mobile friendly:** on phones the question menu becomes a scrollable strip of numbers, and the buttons are sized for touch.
 - **Light and dark mode**, with soft colours that are easy on the eyes.
 - **Keyboard shortcuts:** 1–4 or A–D to answer, ← / → to move between questions, F to flag, Enter to go to the next question after seeing the answer.
-- Scores and theme are saved in your own browser only. There is no account, server or tracking.
+- Scores, topic statistics, review queue, history, flashcard progress and theme are saved in your own browser only. There is no account, server or tracking. *Reset all progress* at the bottom of the home page clears them.
 
 ## Getting started
 
@@ -35,6 +42,25 @@ No installation or build step is needed.
 
 ```powershell
 git clone <this-repository-url>
+```
+
+Opening `index.html` directly from disk works for everything except installing the app and offline mode. Those need the files served over http(s).
+
+### Install it on your phone or desktop
+
+1. Publish the repository with GitHub Pages: on GitHub, go to **Settings → Pages**, choose **Deploy from a branch**, select `main` and `/ (root)`, and save.
+2. Open the Pages address on your phone or computer.
+3. Install it:
+   - **Android (Chrome):** menu ⋮ → *Install app* (or *Add to Home screen*).
+   - **iPhone/iPad (Safari):** Share → *Add to Home Screen*.
+   - **Desktop (Chrome/Edge):** the install icon in the address bar.
+
+After the first visit the app works offline. When you are online it always loads the latest version.
+
+To test locally over http, run this in the project folder and open http://localhost:8000:
+
+```powershell
+python -m http.server 8000
 ```
 
 The headings use Google Fonts when you are online; offline, the app falls back to system fonts and still works.
@@ -66,10 +92,18 @@ Every one of the 95 assessment criteria in the ITIL Foundation (Version 5) sylla
 ## Project structure
 
 ```
-index.html          The app: layout, styles, quiz engine, timer, scoring
+index.html             Page layout and styles (light and dark themes)
+app.js                 The app: exam engine, timer, review screen, resume, results, tracker,
+                       review queue, score history, flashcards, search
 questions/
-  s01.js … s17.js   One question bank file per section
+  s01.js … s17.js      One question bank file per section
+  flashcards.js        The flashcard deck: [term, definition, syllabus category]
+manifest.webmanifest   App name, colours and icons for installing
+sw.js                  Service worker for offline use
+icons/                 App icons
 ```
+
+Each question is mapped to a syllabus topic from its source reference (for example "Syllabus 4.2.3" → topic 4.2), which drives the topic tracker and topic exams.
 
 Each question file registers a section with `QB.add(number, title, syllabusRefs, items)`. Each item has this shape:
 
@@ -83,7 +117,7 @@ Each question file registers a section with `QB.add(number, title, syllabusRefs,
 
 The app shuffles the answer order at runtime, so the correct answer is always written second in the file.
 
-To **add a section**, create `questions/s18.js` using the same format and add a matching `<script src="questions/s18.js"></script>` line in `index.html`.
+To **add a section**, create `questions/s18.js` using the same format, add a matching `<script src="questions/s18.js"></script>` line in `index.html`, and add the file to the `FILES` list in `sw.js` (bumping `VERSION`) so it is available offline.
 
 ## Disclaimer
 

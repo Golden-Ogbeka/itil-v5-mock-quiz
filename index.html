@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ITIL v5 Foundation Quiz</title>
+<meta name="description" content="Timed ITIL Foundation (Version 5) mock exams with explanations, topic tracking, review queue and flashcards.">
+<meta name="theme-color" content="#41607a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ITIL v5 Exam">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -37,7 +46,7 @@
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{transition:background .25s,color .25s}
-.theme-tog{position:fixed;top:16px;right:16px;z-index:10;width:40px;height:40px;padding:0;border-radius:50%;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line-2);color:var(--ink-2);box-shadow:var(--shadow)}
+.theme-tog{position:absolute;top:16px;right:16px;z-index:10;width:40px;height:40px;padding:0;border-radius:50%;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line-2);color:var(--ink-2);box-shadow:var(--shadow)}
 .theme-tog svg{width:18px;height:18px}
 .theme-tog .moon{display:block}.theme-tog .sun{display:none}
 :root[data-theme="dark"] .theme-tog .moon{display:none}
@@ -235,6 +244,91 @@ button.end:hover:not(:disabled){background:var(--bad);border-color:var(--bad);co
 .verdict-tag.pass{background:var(--good-bg);color:var(--good);border:1px solid var(--good-line)}
 .verdict-tag.fail{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad-line)}
 @media print{.theme-tog,.topbar,.noprint{display:none!important}body{background:#fff}}
+
+/* ---------- dashboard, review, flashcards, search ---------- */
+.fig small{font-size:1.2rem;color:var(--muted)}
+.empty{color:var(--muted);font-size:.86rem;margin:0}
+button.wide{width:100%}
+button.linkish{font-size:.8rem;padding:2px 4px;text-decoration:underline}
+.gridtitle{font-size:1.5rem;margin:6px 0 14px}
+.resume{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px;border-left:3px solid var(--navy)}
+.resume b{display:block;margin:4px 0 2px}
+.resume span{font-size:.84rem;color:var(--muted)}
+.searchbar{display:flex;gap:10px;margin-bottom:20px}
+.searchbar input{flex:1;min-width:0;font:inherit;font-size:.95rem;padding:10px 14px;border-radius:8px;border:1px solid var(--line-2);background:var(--paper);color:var(--ink)}
+.searchbar input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.dash{display:grid;grid-template-columns:1.25fr 0.8fr 1fr;gap:18px;margin-bottom:26px}
+.dcard{display:flex;flex-direction:column;gap:12px}
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dhead h3{margin:0;font-size:1.3rem}
+.dhead .ghost{font-size:.8rem;padding:4px 6px}
+.rq{display:flex;align-items:baseline;gap:8px}
+.rq b{font-family:var(--serif);font-size:2.8rem;line-height:1;color:var(--navy);font-weight:600;font-variant-numeric:lining-nums}
+.rq span{color:var(--muted);font-size:.86rem}
+.dcard .primary.wide{margin-top:auto}
+.tlist{display:grid;gap:10px}
+.trow{display:grid;grid-template-columns:minmax(0,1fr) 44px auto;grid-template-areas:"name name name" "bar pct go";gap:4px 10px;align-items:center}
+.tname{grid-area:name;font-size:.86rem;color:var(--ink);line-height:1.35}
+.tbar{grid-area:bar}.tpct{grid-area:pct}.tgo{grid-area:go}
+.tid{display:inline-block;min-width:26px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tbar{position:relative;height:8px;border-radius:99px;background:var(--line)}
+.tfill{height:100%;border-radius:99px;background:var(--navy)}
+.tfill.low{background:var(--bad)}
+.tpass{position:absolute;left:65%;top:-3px;bottom:-3px;width:2px;background:var(--ink-2);opacity:.5;border-radius:2px}
+.tpct{font-size:.84rem;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.tgo{font-size:.76rem;padding:4px 10px}
+.tmeta{font-size:.74rem;color:var(--muted);margin:-2px 0 6px}
+.tcat{margin-bottom:16px}
+.tcat h3{font-size:1.25rem;margin:0 0 14px}
+.chartwrap{position:relative}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart .cg{stroke:var(--line);stroke-width:1}
+.chart .cl{fill:var(--muted);font-size:12px;font-family:var(--sans)}
+.chart .cpass{stroke:var(--gold);stroke-width:1.5;stroke-dasharray:4 3}
+.chart .cline{fill:none;stroke:var(--navy);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .cdot{fill:var(--navy);stroke:var(--paper);stroke-width:2}
+.chart .chit{fill:transparent;cursor:pointer}
+.ctip{position:absolute;transform:translate(-50%,calc(-100% - 10px));background:var(--ink);color:var(--bg);font-size:.76rem;line-height:1.4;padding:7px 10px;border-radius:6px;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow)}
+.ctip span{opacity:.75}
+.tablecard{padding:0;overflow-x:auto}
+.htable{width:100%;border-collapse:collapse;font-size:.86rem}
+.htable th{text-align:left;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:12px 16px;border-bottom:1px solid var(--line)}
+.htable td{padding:10px 16px;border-bottom:1px solid var(--line)}
+.htable tr:last-child td{border-bottom:0}
+.optbox{margin:0 0 16px;padding:12px 14px;border:1px solid var(--line-2);border-radius:8px;background:var(--key);align-items:flex-start!important}
+.optbox input{margin-top:3px;flex:none}
+.endrow{justify-content:flex-end}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chips button{font-size:.8rem;padding:6px 12px;border-radius:99px}
+.chips button.on{background:var(--navy);border-color:var(--navy);color:var(--on-accent)}
+.rvnote{color:var(--ink-2);font-size:.92rem;margin:0 0 16px;max-width:760px}
+.rvgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px;margin-bottom:24px;max-width:900px}
+.rvt{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;border-radius:8px;text-align:left}
+.rvt b{font-size:1.05rem;font-variant-numeric:tabular-nums}
+.rvt span{font-size:.74rem;color:var(--muted)}
+.rvt .fi{position:absolute;top:9px;right:9px;color:var(--warn)}
+.rvt .fi .cloth{fill:var(--warn)}
+.rvt.un{border-style:dashed;border-color:var(--bad-line)}
+.rvt.un span{color:var(--bad)}
+.rvt.ans{border-color:var(--navy);box-shadow:inset 3px 0 0 var(--navy)}
+.rvt.ok{box-shadow:inset 3px 0 0 var(--good);border-color:var(--good-line)}
+.rvt.no{box-shadow:inset 3px 0 0 var(--bad);border-color:var(--bad-line)}
+.rvt.fl{background:var(--warn-bg)}
+.rv .endrow{max-width:900px}
+.fcprog{font-size:.82rem;color:var(--muted);margin-bottom:10px;text-align:center}
+.fcard{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;max-width:640px;min-height:260px;margin:0 auto;padding:30px 28px;border-radius:14px;background:var(--paper);border:1px solid var(--line-2);box-shadow:var(--shadow-lift);text-align:center}
+.fcard:hover:not(:disabled){color:var(--ink);border-color:var(--navy)}
+.fcard.flip{border-color:var(--gold)}
+.fctag{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.fcterm{font-family:var(--serif);font-size:1.9rem;font-weight:600;line-height:1.2;color:var(--ink)}
+.fcdef{font-size:1.02rem;line-height:1.6;color:var(--ink-2);max-width:520px;border-top:1px solid var(--line);padding-top:14px}
+.fchint{font-size:.82rem;color:var(--muted)}
+.fcbtns{display:flex;justify-content:center;gap:12px;max-width:640px;margin:18px auto 0}
+.fcbtns button{flex:1;height:46px}
+.fcdone{max-width:640px;margin:0 auto;text-align:center;padding:34px 24px}
+.fcdone h3{font-size:1.6rem;margin:0 0 8px}
+mark{background:var(--warn-bg);color:var(--ink);border-radius:3px;padding:0 2px;box-shadow:0 0 0 1px var(--warn-line)}
+@media (max-width:900px){ .dash{grid-template-columns:1fr 1fr} .dash .dcard:first-child{grid-column:1 / -1} }
 @media (max-width:760px){
   /* exam screen */
   .xm-top{padding:10px 14px;gap:10px;padding-top:max(10px,env(safe-area-inset-top))}
@@ -310,6 +404,16 @@ button.end:hover:not(:disabled){background:var(--bad);border-color:var(--bad);co
   .score .row button{width:100%;height:46px}
   .revcard{padding:4px 18px}
   .rev .q{font-size:1.1rem}
+  .dash{grid-template-columns:1fr;gap:14px}
+  .resume .row{width:100%}
+  .resume .row button{flex:1;height:44px}
+  .searchbar button{padding:0 14px}
+  .rvgrid{grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+  .rv .endrow{flex-direction:column-reverse}
+  .rv .endrow button{width:100%;height:46px}
+  .fcard{min-height:230px;padding:24px 18px}
+  .fcterm{font-size:1.55rem}
+  .htable th:nth-child(1),.htable td:nth-child(1){display:none}
   .modal{padding:20px 18px 16px}
   .modal .btns{flex-direction:column-reverse}
   .modal .btns button{width:100%;height:46px}
@@ -356,355 +460,7 @@ window.QB = { sections: [], add(n, title, refs, items){ this.sections[n-1] = {n,
 <script src="questions/s15.js"></script>
 <script src="questions/s16.js"></script>
 <script src="questions/s17.js"></script>
-<script>
-(function(){
-const PASS = 0.65, KEY = 'itil5quiz.v1';
-const app = document.getElementById('app');
-const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-const isList = o => /^\d and \d$/.test(o);
-
-function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; } }
-function save(d){ try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e){} }
-let store = load();
-let prefs = Object.assign({shuffleQ: true, feedback: true}, store.prefs || {});
-
-let state = null, tick = null;
-
-function home(){
-  stopTimer();
-  document.body.classList.remove('exam');
-  closeModal();
-  const secs = QB.sections.filter(Boolean);
-  const total = secs.reduce((s, x) => s + x.items.length, 0);
-  const done = secs.filter(s => ((store.sec || {})[s.n] || {}).best != null);
-  const passed = done.filter(s => store.sec[s.n].best >= PASS * s.items.length).length;
-  let html = `<header class="mast"><div>
-    <div class="eyebrow">ITIL® Foundation · Version 5</div>
-    <h1>Exam Practice Studio</h1>
-    <p>Each section is a timed exam simulation in the style of the live online exam: 40 questions, 60 minutes, a question menu with flags, and your result at the end, followed by a full review with explanations. Pass mark 65% (26 of 40).</p>
-    <hr class="rule"></div>
-    <div class="figs">
-      <div class="fig"><b>${secs.length}</b><span>Sections</span></div>
-      <div class="fig"><b>${total}</b><span>Questions</span></div>
-      <div class="fig"><b>${passed}<small style="font-size:1.2rem;color:var(--muted)">/${secs.length}</small></b><span>Passed</span></div>
-    </div></header>
-  <div class="notice" role="note"><b>For practice only.</b> Every question here is an original sample question written for revision. None are taken from, or represent, the official ITIL® Foundation (Version 5) exam.</div>
-  <div class="toolbar">
-    <label class="tog"><input type="checkbox" id="pShuf" ${prefs.shuffleQ ? 'checked' : ''}> Shuffle question order</label>
-    <label class="tog"><input type="checkbox" id="pFb" ${prefs.feedback ? 'checked' : ''}> Show correct answer after each question</label>
-    <span class="spacer"></span>
-    <button id="mock" class="primary">Full mock exam (all topics) &nbsp;→</button>
-  </div><div class="grid">`;
-  secs.forEach(s => {
-    const st = (store.sec || {})[s.n] || {};
-    const best = st.best != null ? `<span class="pill ${st.best >= PASS * s.items.length ? 'pass' : 'fail'}">Best ${st.best}/${s.items.length}</span>` : '<span class="pill quiet">Not yet attempted</span>';
-    const last = st.last != null ? `<span class="pill">Last ${st.last}/${s.items.length}</span>` : '';
-    const att = st.attempts ? `<span class="pill">${st.attempts} attempt${st.attempts > 1 ? 's' : ''}</span>` : '';
-    html += `<div class="card sec"><div class="head"><div class="num">${String(s.n).padStart(2, '0')}</div><div class="tag">${s.items.length} questions</div></div>
-      <h3>${esc(s.title)}</h3>
-      <div class="refs">${esc(s.refs)}</div><div class="stats">${best}${last}${att}</div>
-      <div class="row"><button class="primary" data-exam="${s.n}" title="Timed exam simulation">Start exam</button><button data-study="${s.n}" title="Read all questions and answers">Study</button></div></div>`;
-  });
-  html += `</div><p class="hint">In the exam: 1–4 or A–D to answer, ← → to move between questions, F to flag. Scores are saved in this browser only. ·
-  <button id="reset" class="ghost" style="font-size:.8rem;padding:2px 4px;text-decoration:underline">Reset scores</button></p>
-  <p class="hint" style="margin-top:6px">Sample questions for practice only; none are from the official exam. Not affiliated with or endorsed by PeopleCert. ITIL® is a registered trademark of PeopleCert.</p>`;
-  app.innerHTML = html;
-  app.querySelectorAll('[data-exam]').forEach(b => b.onclick = () => startExam(+b.dataset.exam));
-  app.querySelectorAll('[data-study]').forEach(b => b.onclick = () => study(+b.dataset.study));
-  document.getElementById('mock').onclick = () => startMock();
-  document.getElementById('pShuf').onchange = e => { prefs.shuffleQ = e.target.checked; store.prefs = prefs; save(store); };
-  document.getElementById('pFb').onchange = e => { prefs.feedback = e.target.checked; store.prefs = prefs; save(store); };
-  document.getElementById('reset').onclick = () => { if (confirm('Clear all saved scores?')) { store = {prefs}; save(store); home(); } };
-  window.scrollTo(0, 0);
-}
-
-function build(items){
-  return items.map(it => {
-    const [q, right, wrongs, exp, src] = it;
-    let opts = [right].concat(wrongs);
-    opts = opts.every(isList) ? opts.slice().sort() : shuffle(opts);
-    return {q, opts, ans: opts.indexOf(right), exp, src};
-  });
-}
-
-function startMock(){
-  const all = [];
-  QB.sections.forEach(s => s && s.items.forEach(it => all.push(Object.assign({}, {it, sec: s.n}))));
-  const pick = shuffle(all).slice(0, 40);
-  const qs = build(pick.map(x => x.it)).map((q, k) => Object.assign(q, {sec: pick[k].sec}));
-  state = {kind: 'exam', mode: 'mock', title: 'Full mock exam (all topics)', qs};
-  examIntro();
-}
-
-/* ---------- Exam simulation ---------- */
-const EXAM_SECS_PER_Q = 90;            // 60 minutes for 40 questions
-const FLAG = `<svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><path class="pole" d="M5 21V4"/><path class="cloth" d="M5 4h11l-2.2 4L16 12H5"/></svg>`;
-const fmt = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
-
-function startExam(n, onlyIdx){
-  const s = QB.sections[n-1];
-  let items = s.items.map((it, i) => ({it, i}));
-  if (onlyIdx) items = items.filter(x => onlyIdx.includes(x.i));
-  if (prefs.shuffleQ) items = shuffle(items);
-  const qs = build(items.map(x => x.it)).map((q, k) => Object.assign(q, {orig: items[k].i}));
-  const title = onlyIdx ? `Section ${n}: ${s.title} (missed questions)` : `Section ${n}: ${s.title}`;
-  state = {kind: 'exam', mode: 'sec', n, title, qs, partial: !!onlyIdx};
-  examIntro();
-}
-
-function examIntro(){
-  stopTimer();
-  document.body.classList.remove('exam');
-  const n = state.qs.length, mins = Math.round(n * EXAM_SECS_PER_Q / 60), need = Math.ceil(PASS * n);
-  app.innerHTML = `<div class="topbar"><button class="ghost" id="back">← All sections</button></div>
-  <div class="intro"><div class="eyebrow">Exam information</div>
-  <h2 style="margin:8px 0 14px">ITIL® Foundation (Version 5) – Practice Exam</h2>
-  <div class="card" style="padding:22px 26px">
-    <table>
-      <tr><td>Paper</td><td>${esc(state.title)}</td></tr>
-      <tr><td>Number of questions</td><td>${n} multiple choice, 1 mark each</td></tr>
-      <tr><td>Duration</td><td>${mins} minutes</td></tr>
-      <tr><td>Pass mark</td><td>${need} of ${n} (65%)</td></tr>
-      <tr><td>Materials allowed</td><td>None (closed book)</td></tr>
-      <tr><td>Negative marking</td><td>No</td></tr>
-    </table>
-    <label class="tog" style="margin:0 0 16px;padding:12px 14px;border:1px solid var(--line-2);border-radius:8px;background:var(--key)">
-      <input type="checkbox" id="iFb" ${prefs.feedback ? 'checked' : ''}>
-      <span><b>Show the correct answer and explanation after each question.</b> Untick this for a strict simulation where answers are only revealed at the end, like the real exam.</span></label>
-    <b style="font-size:.92rem">How the exam screen works</b>
-    <ol>
-      <li>The menu on the left lists the question numbers. Click a number, or use <b>Next</b> and <b>Previous</b>, to move between questions. The current question is highlighted.</li>
-      <li>Click the letter of an answer to choose it. With answer feedback on, your answer is locked and the correct answer and explanation appear straight away. With it off, you can change your answer at any time before ending the exam.</li>
-      <li>Click the flag icon next to a question number (or “Flag for review” above the question) to mark it to come back to. The flag turns amber when set; click it again to remove it. You can flag as many questions as you like.</li>
-      <li>The countdown timer is in the top right. A reminder appears when 15 minutes are left, and the exam ends automatically when time runs out.</li>
-      <li>Click <b>End Exam</b> (bottom right) when you have finished. Unanswered questions are marked as incorrect, and you cannot change answers after you end the exam.</li>
-      <li>You get your provisional result straight away, followed by a full review with explanations.</li>
-    </ol>
-  </div>
-  <p class="notice" style="margin:16px 0">This is a practice simulation. All questions are original sample questions and none are from the official exam.</p>
-  <div class="row" style="justify-content:flex-end"><button id="back2">Cancel</button><button class="primary" id="go">Start exam &nbsp;→</button></div></div>`;
-  document.getElementById('back').onclick = home;
-  document.getElementById('back2').onclick = home;
-  document.getElementById('go').onclick = examBegin;
-  document.getElementById('iFb').onchange = e => { prefs.feedback = e.target.checked; store.prefs = prefs; save(store); };
-  window.scrollTo(0, 0);
-}
-
-function examBegin(){
-  const n = state.qs.length;
-  Object.assign(state, {i: 0, sel: Array(n).fill(-1), flag: Array(n).fill(false), left: n * EXAM_SECS_PER_Q, warned: false, over: false, fb: !!prefs.feedback});
-  document.body.classList.add('exam');
-  examRender();
-  tick = setInterval(examTick, 1000);
-}
-
-function examTick(){
-  if (state.over) return;
-  state.left--;
-  const t = document.getElementById('xt'), box = document.getElementById('xtb');
-  if (t) { t.textContent = fmt(Math.max(state.left, 0)); box.classList.toggle('low', state.left <= 300); }
-  if (!state.warned && state.left === 900 && state.qs.length * EXAM_SECS_PER_Q > 900) {
-    state.warned = true;
-    modal('15 minutes remaining', '<p>You have 15 minutes left to complete your exam.</p>', [{label: 'Continue', primary: true}]);
-  }
-  if (state.left <= 0) {
-    examSubmit();
-    modal('Time is up', '<p>The exam time has ended and your answers have been submitted automatically.</p>', [{label: 'View result', primary: true}]);
-  }
-}
-
-function examPick(k){
-  if (state.over) return;
-  if (state.fb && state.sel[state.i] >= 0) return;   // locked once answered when feedback is on
-  state.sel[state.i] = k; examRender();
-  if (state.fb) { const f = document.getElementById('xfb'); if (f) f.scrollIntoView({block: 'nearest', behavior: 'smooth'}); }
-}
-
-function examRender(){
-  const n = state.qs.length, q = state.qs[state.i], z = prefs.zoom || 1;
-  const answered = state.sel.filter(v => v >= 0).length;
-  const mine = state.sel[state.i], locked = state.fb && mine >= 0;
-  const correctSoFar = state.sel.filter((v, k) => v >= 0 && v === state.qs[k].ans).length;
-  const optCls = k => !locked ? (mine === k ? 'sel' : '') : k === q.ans ? 'correct' : k === mine ? 'wrong' : 'dim';
-  const fbHtml = !locked ? '' : `<div class="fb ${mine === q.ans ? 'good' : 'bad'}" id="xfb" role="status">
-      <span class="t">${mine === q.ans ? 'Correct.' : `Incorrect. The correct answer is ${'ABCD'[q.ans]}.`}</span>
-      <div class="why"><b>Why:</b> ${esc(q.exp)}</div><div class="src">Source · ${esc(q.src)}</div></div>`;
-  app.innerHTML = `<div class="xm" style="--z:${z}">
-  <header class="xm-top">
-    <div class="xm-title"><b>ITIL® Foundation (Version 5) – Practice Exam</b><small>${esc(state.title)} · Candidate: Practice candidate</small></div>
-    <div class="xm-tools">
-      <div class="xm-zoom" title="Text size"><button id="zm" aria-label="Smaller text">A−</button><button id="zp" aria-label="Larger text">A+</button></div>
-      <div class="xm-time" id="xtb"><span>Time remaining</span><b id="xt">${fmt(state.left)}</b></div>
-    </div>
-  </header>
-  <div class="xm-body">
-    <aside class="xm-nav" id="xnav"><h4>Questions</h4>
-      <div class="xm-legend"><span><i class="l-ans"></i>Answered</span><span><i></i>Unanswered</span><span class="lg-flag">${FLAG}Flagged</span></div>
-      ${state.qs.map((qq, k) => `<div class="xm-q ${k === state.i ? 'cur' : ''} ${state.sel[k] >= 0 ? 'ans' : ''} ${state.flag[k] ? 'flag' : ''} ${state.fb && state.sel[k] >= 0 ? (state.sel[k] === qq.ans ? 'ok' : 'no') : ''}">
-        <button class="flagbtn ${state.flag[k] ? 'on' : ''}" data-flag="${k}" aria-pressed="${state.flag[k]}" title="${state.flag[k] ? 'Unflag' : 'Flag'} question ${k + 1}" aria-label="Flag question ${k + 1}">${FLAG}</button>
-        <button data-go="${k}" aria-label="Question ${k + 1}"><span><span class="qlbl">Question </span>${k + 1}</span><span class="st"></span></button></div>`).join('')}
-    </aside>
-    <main class="xm-main" id="xmain">
-      <div class="xm-qhead"><b>Question ${state.i + 1} of ${n}</b>
-        <button class="xm-flag ${state.flag[state.i] ? 'on' : ''}" id="xflag" aria-pressed="${state.flag[state.i]}">${FLAG}<span>${state.flag[state.i] ? 'Flagged for review' : 'Flag for review'}</span></button></div>
-      <p class="xm-stem">${esc(q.q)}</p>
-      <div class="xm-opts">${q.opts.map((o, k) => `<button class="xo ${optCls(k)}" data-k="${k}" aria-pressed="${mine === k}" ${locked ? 'aria-disabled="true"' : ''}><span class="xl">${'ABCD'[k]}</span><span>${esc(o)}</span></button>`).join('')}</div>
-      ${fbHtml}
-    </main>
-  </div>
-  <footer class="xm-foot">
-    <div class="grp"><button id="xprev" ${state.i === 0 ? 'disabled' : ''} aria-label="Previous question">←<span class="lbl"> Previous</span></button><button class="primary" id="xnext" ${state.i === n - 1 ? 'disabled' : ''}>Next →</button>
-      <span class="prog">${answered} of ${n} answered${state.fb ? ` · ${correctSoFar} correct` : ''} · ${state.flag.filter(Boolean).length} flagged</span></div>
-    <div class="grp"><button class="ghost" id="xexit">Exit</button><button class="end" id="xend">End Exam</button></div>
-  </footer></div>`;
-  app.querySelectorAll('.xo').forEach(b => b.onclick = () => examPick(+b.dataset.k));
-  app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => examGo(+b.dataset.go));
-  app.querySelectorAll('[data-flag]').forEach(c => c.onclick = () => { const k = +c.dataset.flag; state.flag[k] = !state.flag[k]; examRender(); });
-  document.getElementById('xflag').onclick = () => { state.flag[state.i] = !state.flag[state.i]; examRender(); };
-  document.getElementById('xprev').onclick = () => examGo(state.i - 1);
-  document.getElementById('xnext').onclick = () => examGo(state.i + 1);
-  document.getElementById('xend').onclick = examEndAsk;
-  document.getElementById('xexit').onclick = () => modal('Exit the exam?', '<p>Your answers will not be saved and no result will be recorded.</p>',
-    [{label: 'Return to exam'}, {label: 'Exit without result', danger: true, fn: home}]);
-  document.getElementById('zm').onclick = () => setZoom(-0.1);
-  document.getElementById('zp').onclick = () => setZoom(0.1);
-  const cur = app.querySelector('.xm-q.cur'); if (cur) cur.scrollIntoView({block: 'nearest', inline: 'nearest'});
-}
-
-function examGo(k){
-  if (k < 0 || k >= state.qs.length) return;
-  state.i = k; examRender();
-  const m = document.getElementById('xmain'); if (m) m.scrollTop = 0;
-}
-
-function setZoom(d){
-  prefs.zoom = Math.min(1.5, Math.max(0.85, Math.round(((prefs.zoom || 1) + d) * 100) / 100));
-  store.prefs = prefs; save(store); examRender();
-}
-
-function examEndAsk(){
-  const un = state.sel.filter(v => v < 0).length, fl = state.flag.filter(Boolean).length;
-  let body = '';
-  if (un) body += `<p><b>You have ${un} unanswered question${un > 1 ? 's' : ''}.</b> Unanswered questions will be marked as incorrect.</p>`;
-  if (fl) body += `<p>You have ${fl} flagged question${fl > 1 ? 's' : ''}.</p>`;
-  body += '<p>Are you sure you want to end the exam? Your answers will be submitted and you will not be able to change them.</p>';
-  modal('End exam', body, [{label: 'Return to exam'}, {label: 'End exam', danger: true, fn: examSubmit}]);
-}
-
-function examSubmit(){
-  if (state.over) return;
-  state.over = true; stopTimer();
-  state.used = state.qs.length * EXAM_SECS_PER_Q - Math.max(state.left, 0);
-  state.picks = state.sel.map((k, i) => ({k, ok: k === state.qs[i].ans}));
-  document.body.classList.remove('exam');
-  results();
-}
-
-function modal(title, body, buttons){
-  closeModal();
-  const bg = document.createElement('div');
-  bg.className = 'modal-bg'; bg.id = 'modal';
-  bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><h3 id="mt">${esc(title)}</h3>${body}
-    <div class="btns">${buttons.map((b, i) => `<button data-i="${i}" class="${b.danger ? 'end' : b.primary ? 'primary' : ''}">${esc(b.label)}</button>`).join('')}</div></div>`;
-  document.body.appendChild(bg);
-  bg.querySelectorAll('[data-i]').forEach(el => el.onclick = () => { closeModal(); const f = buttons[+el.dataset.i].fn; if (f) f(); });
-  const last = bg.querySelector('.btns button:last-child'); if (last) last.focus();
-}
-function closeModal(){ const m = document.getElementById('modal'); if (m) m.remove(); }
-
-function stopTimer(){ if (tick) { clearInterval(tick); tick = null; } }
-
-function results(){
-  stopTimer();
-  const total = state.qs.length, score = state.picks.filter(p => p.ok).length;
-  const pass = score >= Math.ceil(PASS * total);
-  if (state.mode === 'sec' && !state.partial) {
-    store.sec = store.sec || {};
-    const st = store.sec[state.n] || {};
-    st.attempts = (st.attempts || 0) + 1; st.last = score; st.best = Math.max(st.best || 0, score);
-    store.sec[state.n] = st; save(store);
-  }
-  const missed = state.qs.map((q, i) => state.picks[i].ok ? null : q).filter(Boolean);
-  const isExam = state.kind === 'exam';
-  const pct = Math.round(score / total * 100);
-  const head = isExam ? `<div class="card result-sheet">
-    <div class="rs-head"><div><div class="eyebrow">Provisional result</div><b style="font-size:1.05rem">ITIL® Foundation (Version 5) – Practice Exam</b></div>
-      <span class="verdict-tag ${pass ? 'pass' : 'fail'}">${pass ? 'PASS' : 'FAIL'}</span></div>
-    <table>
-      <tr><td>Candidate</td><td>Practice candidate</td></tr>
-      <tr><td>Paper</td><td>${esc(state.title)}</td></tr>
-      <tr><td>Date</td><td>${new Date().toLocaleString()}</td></tr>
-      <tr><td>Score</td><td><b>${score} / ${total}</b> (${pct}%)</td></tr>
-      <tr><td>Pass mark</td><td>${Math.ceil(PASS * total)} / ${total} (65%)</td></tr>
-      <tr><td>Answered</td><td>${state.picks.filter(p => p.k >= 0).length} of ${total}</td></tr>
-      <tr><td>Time used</td><td>${fmt(state.used || 0)} of ${fmt(total * EXAM_SECS_PER_Q)}</td></tr>
-    </table></div>` : '';
-  let html = `<div class="topbar"><button class="ghost" id="home">← All sections</button><span class="meta">${esc(state.title)}</span></div>
-  ${head}
-  <div class="card score noprint" ${isExam ? 'style="padding:24px"' : ''}>${isExam ? '' : `<div class="eyebrow">Your result</div>
-  <div class="big">${score}<small> / ${total}</small></div>
-  <div class="verdict">${pct}% &nbsp;·&nbsp; ${pass ? '<span class="pill pass">Pass — 65% or more</span>' : '<span class="pill fail">Below the 65% pass mark</span>'}</div>`}
-  <div class="row" style="justify-content:center">
-    <button class="primary" id="again">Retake ${state.mode === 'mock' ? 'a new mock exam' : isExam ? 'this exam' : 'this section'}</button>
-    ${missed.length && state.mode === 'sec' ? `<button id="missed">Retake the ${missed.length} I missed</button>` : ''}
-    ${isExam ? '<button id="print">Print result</button>' : ''}
-  </div>
-  <div class="row" style="justify-content:center;margin-top:18px"><label class="tog"><input type="checkbox" id="onlyWrong"> Show only the questions I got wrong</label></div>
-  </div><div class="card revcard" id="rev">`;
-  state.qs.forEach((q, i) => {
-    const p = state.picks[i];
-    const yours = p.k === -1 ? (isExam ? 'Not answered' : 'No answer (time ran out)') : `${'ABCD'[p.k]}. ${q.opts[p.k]}`;
-    html += `<div class="rev ${p.ok ? 'r-ok' : 'r-no'}"><div class="q"><i>${i + 1}.</i>${esc(q.q)}</div>
-      <div class="a ${p.ok ? 'ok' : 'no'}">${p.ok ? '✓' : '✗'} Your answer: ${esc(yours)}</div>
-      ${p.ok ? '' : `<div class="a ok">✓ Correct answer: ${'ABCD'[q.ans]}. ${esc(q.opts[q.ans])}</div>`}
-      <div class="e">${esc(q.exp)} <i>· ${esc(q.src)}${q.sec ? ', Section ' + q.sec : ''}</i></div></div>`;
-  });
-  html += '</div>';
-  app.innerHTML = html;
-  document.getElementById('home').onclick = home;
-  document.getElementById('again').onclick = () => state.mode === 'mock' ? startMock() : startExam(state.n);
-  const pr = document.getElementById('print'); if (pr) pr.onclick = () => window.print();
-  const m = document.getElementById('missed');
-  if (m) { const idx = missed.map(q => q.orig); const n = state.n; m.onclick = () => startExam(n, idx); }
-  document.getElementById('onlyWrong').onchange = e => app.querySelectorAll('.r-ok').forEach(r => r.classList.toggle('hidden', e.target.checked));
-  window.scrollTo(0, 0);
-}
-
-function study(n){
-  stopTimer();
-  const s = QB.sections[n-1];
-  let html = `<div class="topbar"><button class="ghost" id="home">← All sections</button><button class="primary" id="go">Start exam &nbsp;→</button></div>
-  <div class="eyebrow">Section ${String(n).padStart(2, '0')} · Study answers</div>
-  <h2 style="margin-top:8px">${esc(s.title)}</h2><p class="sub">${esc(s.refs)} · all ${s.items.length} questions with their answers</p><div class="card revcard">`;
-  s.items.forEach((it, i) => {
-    const [q, right, , exp, src] = it;
-    html += `<div class="rev"><div class="q"><i>${i + 1}.</i>${esc(q)}</div><div class="a ok">✓ ${esc(right)}</div>
-      <div class="e">${esc(exp)} <i>· ${esc(src)}</i></div></div>`;
-  });
-  app.innerHTML = html + '</div>';
-  document.getElementById('home').onclick = home;
-  document.getElementById('go').onclick = () => startExam(n);
-  window.scrollTo(0, 0);
-}
-
-document.addEventListener('keydown', e => {
-  if (!state) return;
-  if (document.getElementById('modal')) return;
-  if (state.kind === 'exam' && document.querySelector('.xm') && !state.over) {
-    if (e.target.tagName === 'INPUT' && e.key === ' ') return;
-    const map = {'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
-    const k = map[e.key.toLowerCase()];
-    if (k != null) examPick(k);
-    else if (e.key === 'Enter' && state.fb && state.sel[state.i] >= 0) { e.preventDefault(); examGo(state.i + 1); }
-    else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'n') examGo(state.i + 1);
-    else if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'p') examGo(state.i - 1);
-    else if (e.key.toLowerCase() === 'f') { state.flag[state.i] = !state.flag[state.i]; examRender(); }
-  }
-});
-
-home();
-})();
-</script>
+<script src="questions/flashcards.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
