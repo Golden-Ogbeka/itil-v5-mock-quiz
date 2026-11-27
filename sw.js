@@ -1,7 +1,7 @@
 /* Offline support: pre-caches the app so it works without a connection.
    When online, files are fetched fresh (and the cache updated); when offline, the cached copy is used.
    Bump VERSION if the list of files changes. */
-const VERSION = 'itil5-v6';
+const VERSION = 'itil5-v7';
 const FILES = [
   './', 'index.html', 'app.js', 'manifest.webmanifest', 'favicon.ico',
   'questions/flashcards.js',

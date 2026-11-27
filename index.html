@@ -356,13 +356,13 @@ mark{background:var(--warn-bg);color:var(--ink);border-radius:3px;padding:0 2px;
   .xm-stem{font-size:calc(1.02rem * var(--z,1));margin-bottom:18px}
   .xo{padding:12px;gap:12px;min-height:52px}
   .xo .xl{width:30px;height:30px}
-  .xm-foot{display:grid;grid-template-columns:auto 1fr auto;gap:8px;padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom))}
+  .xm-foot{display:grid;grid-template-columns:auto auto 1fr;gap:8px;padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom))}
   .xm-foot .grp{display:contents}
   .xm-foot .prog{display:none}
   .xm-foot button{height:44px;padding:0 14px}
-  #xprev{grid-column:1;grid-row:1}
-  #xnext{grid-column:2;grid-row:1}
-  #xend{grid-column:3;grid-row:1}
+  #xend{grid-column:1;grid-row:1}
+  #xprev{grid-column:2;grid-row:1}
+  #xnext{grid-column:3;grid-row:1}
   #xexit{grid-column:1 / -1;grid-row:2;height:auto;padding:2px;font-size:.8rem;color:var(--muted);justify-self:center}
   .xm-foot .lbl{display:none}
 }

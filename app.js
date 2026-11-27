@@ -278,7 +278,7 @@ function examIntro(){
       <li>Click the letter of an answer to choose it. With answer feedback on, your answer is locked and the correct answer and explanation appear straight away. With it off, you can change your answer at any time before ending the exam.</li>
       <li>Click the flag icon next to a question number (or “Flag for review” above the question) to mark it to come back to. Flagged questions are also added to your review queue.</li>
       <li>The countdown timer is in the top right. A reminder appears when 15 minutes are left, and the exam ends automatically when time runs out.</li>
-      <li>Click <b>End Exam</b> (bottom right) to see a review screen of answered, unanswered and flagged questions before you submit. Unanswered questions are marked as incorrect.</li>
+      <li>Click <b>End Exam</b> (bottom left) to see a review screen of answered, unanswered and flagged questions before you submit. Unanswered questions are marked as incorrect.</li>
       <li>If you close the page, your exam is saved with the timer paused, and you can resume it from the home page.</li>
     </ol>
   </div>
@@ -373,9 +373,9 @@ function examRender(){
     <main class="xm-main" id="xmain">${main}</main>
   </div>
   <footer class="xm-foot">
-    <div class="grp"><button id="xprev" ${state.i === 0 || state.reviewing ? 'disabled' : ''} aria-label="Previous question">←<span class="lbl"> Previous</span></button><button class="primary" id="xnext" ${state.i === n - 1 || state.reviewing ? 'disabled' : ''}>Next →</button>
-      <span class="prog">${answered} of ${n} answered${state.fb ? ` · ${correctSoFar} correct` : ''} · ${flagged} flagged</span></div>
     <div class="grp"><button class="ghost" id="xexit">Exit</button><button class="end" id="xend">${state.reviewing ? 'Submit exam' : 'End Exam'}</button></div>
+    <span class="prog">${answered} of ${n} answered${state.fb ? ` · ${correctSoFar} correct` : ''} · ${flagged} flagged</span>
+    <div class="grp"><button id="xprev" ${state.i === 0 || state.reviewing ? 'disabled' : ''} aria-label="Previous question">←<span class="lbl"> Previous</span></button><button class="primary" id="xnext" ${state.i === n - 1 || state.reviewing ? 'disabled' : ''}>Next →</button></div>
   </footer></div>`;
   app.querySelectorAll('.xo').forEach(b => b.onclick = () => examPick(+b.dataset.k));
   app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => examGo(+b.dataset.go));
