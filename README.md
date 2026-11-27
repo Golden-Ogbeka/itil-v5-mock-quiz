@@ -1,31 +1,31 @@
 # ITIL® Foundation (Version 5) Mock Quiz
 
-A free, browser-based mock exam for the **ITIL® Foundation (Version 5)** exam. It has 17 timed sections of 40 multiple-choice questions each (680 questions in total). Each section runs as an exam simulation laid out like the live online exam, followed by a full answer review with explanations. It works on desktop and mobile.
+A free, browser-based mock exam for the **ITIL® Foundation (Version 5)** exam. It has 23 timed sections with 846 multiple-choice questions in total: 17 sections of 40, plus six deep-dive sections written from the syllabus-relevant chapters of the Official Book (version 5.1). Each section runs as an exam simulation laid out like the live online exam, followed by a full answer review with explanations. It works on desktop and mobile.
 
 > [!IMPORTANT]
 > **For practice only.** Every question in this quiz is an original sample question written for revision. None are taken from, or represent, the official ITIL® Foundation (Version 5) exam, and a good score here does not guarantee a pass on the real exam.
 
 ## Features
 
-- **17 sections × 40 questions**, grouped by syllabus topic.
+- **23 sections, 846 questions**, grouped by syllabus topic (sections 1–17 have 40 questions each; the six Official Book deep-dives have 24–34).
 - **Exam simulation, modelled on the live online exam:**
   - an exam information screen before you start
-  - a 60-minute countdown for 40 questions, shown in the top right
+  - a countdown of 90 seconds per question (60 minutes for 40 questions), shown in the top right
   - a question menu on the left, with the current question highlighted and a flag icon next to each number (amber when flagged)
   - Previous / Next buttons, a "Flag for review" button and text-size controls
   - a reminder when 15 minutes are left, and automatic submission when time runs out
   - **End Exam** (bottom right) opens a **review screen** first: a tile for every question showing answered, unanswered and flagged, with filters, so you can jump back before you submit
   - **Resume after closing:** if you close or refresh the page mid-exam, your answers, flags and remaining time are saved with the timer paused. Resume or discard it from the home page. "Exit" also offers *Save and exit*.
 - **Show correct answer after each question** (on by default): once you answer, the question locks, the correct answer is highlighted, and an explanation of why appears straight away. A running "correct so far" count appears at the bottom. Turn it off on the home page or the exam information screen for a strict simulation where answers are only revealed at the end, like the real exam.
-- **Results:** a provisional result sheet (pass/fail, score, pass mark of 26/40, questions answered, time used) that you can print, followed by a full review of every question with the correct answer and an explanation.
+- **Results:** a provisional result sheet (pass/fail, score, pass mark of 65% (26/40 for a 40-question section), questions answered, time used) that you can print, followed by a full review of every question with the correct answer and an explanation.
 - **Retake any section** as often as you like, or retake only the questions you got wrong.
 - **Full mock exam:** 40 random questions from all sections.
 - **Weak-topic tracker:** every answer is tracked against the 21 syllabus topics (1.1 to 7.2). The home page shows your five weakest topics, and the *All topics* page shows your accuracy for every topic against the 65% pass line. Each topic has a **Practise** button for a timed exam of up to 40 questions on that topic.
 - **Review queue:** questions you get wrong or flag are added to a review queue. **Start review exam** builds an exam from them, and a question leaves the queue once you answer it correctly twice in a row.
 - **Score history:** a chart of your recent scores against the 65% pass line (hover over a point for details), plus a full table of every attempt.
 - **Flashcards:** 69 cards for the key terms and definitions, filterable by syllabus category. Tap to flip, then mark *Knew it* or *Didn't know*. Missed cards come back later in the round. Keyboard: Space to flip, K / D to mark.
-- **Search:** search all 680 questions, answers and explanations for any term, with matches highlighted.
-- **Study:** read all 40 questions and answers in a section before you sit the exam.
+- **Search:** search all 846 questions, answers and explanations for any term, with matches highlighted.
+- **Study:** read all the questions and answers in a section before you sit the exam.
 - **Installable and works offline:** when served over the web (for example on GitHub Pages), you can install it to your phone's home screen or your desktop, and it keeps working without an internet connection.
 - **Shuffled questions and answers** on every attempt (shuffling questions can be turned off).
 - **Mobile friendly:** on phones the question menu becomes a scrollable strip of numbers, and the buttons are sized for touch.
@@ -86,6 +86,12 @@ The headings use Google Fonts when you are online; offline, the app falls back t
 | 15 | Scenario practice: principles, governance, practices and improvement | 4 |
 | 16 | Exam traps, value streams, AI and other frameworks | 5, 6, 7 |
 | 17 | Syllabus gap-filler | all |
+| 18 | Official Book deep-dive: service relationships (service provider role, relationship types, journey, experience, SLAs) | 1.4 (incl. 1.4.7, now an "understand" criterion in syllabus v5.1) |
+| 19 | Official Book deep-dive: applying the guiding principles | 4.2 (each principle "including subsections", as in syllabus v5.1) |
+| 20 | Official Book deep-dive: governance patterns, value chain patterns and practices | 4.3 – 4.5 |
+| 21 | Official Book deep-dive: continual improvement, value streams, the Four Dimensions, AI and other frameworks | 2.1, 4.6, 5, 6, 7 (incl. 6.1.3, reworded in syllabus v5.1) |
+| 22 | Official Book deep-dive: the eight lifecycle activities in practice | 3.1 – 3.2 |
+| 23 | Official Book deep-dive: key concepts, the service economy, complexity and the Value System | 1, 4.1, 5.1 – 5.2 |
 
 Every one of the 95 assessment criteria in the ITIL Foundation (Version 5) syllabus is covered by at least three questions.
 
@@ -96,7 +102,7 @@ index.html             Page layout and styles (light and dark themes)
 app.js                 The app: exam engine, timer, review screen, resume, results, tracker,
                        review queue, score history, flashcards, search
 questions/
-  s01.js … s17.js      One question bank file per section
+  s01.js … s23.js      One question bank file per section
   flashcards.js        The flashcard deck: [term, definition, syllabus category]
 manifest.webmanifest   App name, colours and icons for installing
 sw.js                  Service worker for offline use

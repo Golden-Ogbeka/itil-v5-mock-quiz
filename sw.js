@@ -1,11 +1,11 @@
 /* Offline support: pre-caches the app so it works without a connection.
    When online, files are fetched fresh (and the cache updated); when offline, the cached copy is used.
    Bump VERSION if the list of files changes. */
-const VERSION = 'itil5-v3';
+const VERSION = 'itil5-v6';
 const FILES = [
   './', 'index.html', 'app.js', 'manifest.webmanifest', 'favicon.ico',
   'questions/flashcards.js',
-  ...Array.from({length: 17}, (_, i) => `questions/s${String(i + 1).padStart(2, '0')}.js`),
+  ...Array.from({length: 23}, (_, i) => `questions/s${String(i + 1).padStart(2, '0')}.js`),
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'
 ];
 

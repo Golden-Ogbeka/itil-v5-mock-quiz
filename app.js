@@ -39,9 +39,9 @@ const TOPICS = {
 // Sample-paper questions map to these assessment criteria (from the official answer keys).
 const SP = {'1-1':'1.2','1-2':'1.2','1-3':'1.2','1-4':'1.3','1-5':'1.4','1-6':'2.2','1-7':'2.2','1-8':'2.2','1-9':'2.2','1-10':'4.2','1-11':'4.2','1-12':'4.2','1-13':'4.2','1-14':'4.2','1-15':'4.3','1-16':'4.4','1-17':'1.1','1-18':'4.4','1-19':'4.4','1-20':'4.5','1-21':'4.5','1-22':'4.6','1-23':'5.3','1-24':'1.1','1-25':'4.4','1-26':'1.1','1-27':'1.4','1-28':'1.4','1-29':'1.4','1-30':'3.2','1-31':'3.2','1-32':'3.2','1-33':'3.2','1-34':'4.4','1-35':'4.4','1-36':'7.1','1-37':'6.2','1-38':'1.4','1-39':'4.1','1-40':'5.1',
   '2-1':'1.1','2-2':'1.1','2-3':'1.1','2-4':'1.2','2-5':'1.2','2-6':'1.3','2-7':'1.4','2-8':'1.3','2-9':'1.4','2-10':'1.4','2-11':'1.4','2-12':'1.4','2-13':'2.2','2-14':'2.2','2-15':'2.2','2-16':'2.2','2-17':'4.1','2-18':'4.2','2-19':'4.2','2-20':'4.2','2-21':'4.2','2-22':'4.2','2-23':'4.3','2-24':'3.2','2-25':'3.2','2-26':'3.2','2-27':'3.2','2-28':'4.4','2-29':'4.4','2-30':'4.4','2-31':'4.4','2-32':'4.4','2-33':'4.4','2-34':'4.4','2-35':'4.4','2-36':'4.5','2-37':'4.5','2-38':'4.6','2-39':'5.1','2-40':'5.3'};
-const SEC_TOPIC = {1:'1.1',2:'1.3',3:'1.4',4:'2.1',5:'3.2',6:'4.2',7:'4.2',8:'4.4',9:'4.5',10:'4.6',11:'5.3',12:'6.1',13:'1.4',14:'3.2',15:'4.2',16:'5.1',17:'4.5'};
+const SEC_TOPIC = {1:'1.1',2:'1.3',3:'1.4',4:'2.1',5:'3.2',6:'4.2',7:'4.2',8:'4.4',9:'4.5',10:'4.6',11:'5.3',12:'6.1',13:'1.4',14:'3.2',15:'4.2',16:'5.1',17:'4.5',18:'1.4',19:'4.2',20:'4.3',21:'4.6',22:'3.2',23:'1.3'};
 function topicOf(src, sec){
-  const m = String(src).match(/(\d)\.(\d)\.\d/);
+  const m = String(src).match(/Syllabus (\d)\.(\d)\.\d/) || String(src).match(/(\d)\.(\d)\.\d/);
   if (m && TOPICS[m[1] + '.' + m[2]]) return m[1] + '.' + m[2];
   const p = String(src).match(/Sample Paper (\d), Q(\d+)/);
   if (p && SP[p[1] + '-' + p[2]]) return SP[p[1] + '-' + p[2]];
@@ -129,7 +129,7 @@ function home(){
   let html = `<header class="mast"><div>
     <div class="eyebrow">ITIL® Foundation · Version 5</div>
     <h1>Exam Practice Studio</h1>
-    <p>Each section is a timed exam simulation in the style of the live online exam: 40 questions, 60 minutes, a question menu with flags, and your result at the end, followed by a full review with explanations. Pass mark 65% (26 of 40).</p>
+    <p>Each section is a timed exam simulation in the style of the live online exam: 90 seconds per question (60 minutes for a 40-question section), a question menu with flags, and your result at the end, followed by a full review with explanations. Pass mark 65% (26 of 40).</p>
     <hr class="rule"></div>
     <div class="figs">
       <div class="fig"><b>${secs.length}</b><span>Sections</span></div>
