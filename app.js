@@ -278,7 +278,7 @@ function examIntro(){
       <li>Click the letter of an answer to choose it. With answer feedback on, your answer is locked and the correct answer and explanation appear straight away. With it off, you can change your answer at any time before ending the exam.</li>
       <li>Click the flag icon next to a question number (or “Flag for review” above the question) to mark it to come back to. Flagged questions are also added to your review queue.</li>
       <li>The countdown timer is in the top right. A reminder appears when 15 minutes are left, and the exam ends automatically when time runs out.</li>
-      <li>Click <b>End Exam</b> (bottom left) to see a review screen of answered, unanswered and flagged questions before you submit. Unanswered questions are marked as incorrect.</li>
+      <li>On the last question, <b>Next</b> becomes <b>Review &amp; finish</b>. You can also click <b>End Exam</b> (top right, beside the timer) at any time. Both take you to a review screen of answered, unanswered and flagged questions before you submit. Unanswered questions are marked as incorrect.</li>
       <li>If you close the page, your exam is saved with the timer paused, and you can resume it from the home page.</li>
     </ol>
   </div>
@@ -361,6 +361,7 @@ function examRender(){
     <div class="xm-tools">
       <div class="xm-zoom" title="Text size"><button id="zm" aria-label="Smaller text">A−</button><button id="zp" aria-label="Larger text">A+</button></div>
       <div class="xm-time" id="xtb"><span>Time remaining</span><b id="xt">${fmt(Math.max(state.left, 0))}</b></div>
+      <div class="xm-acts"><button class="ghost" id="xexit">Exit</button><button class="end" id="xend">${state.reviewing ? 'Submit exam' : 'End Exam'}</button></div>
     </div>
   </header>
   <div class="xm-body">
@@ -373,16 +374,16 @@ function examRender(){
     <main class="xm-main" id="xmain">${main}</main>
   </div>
   <footer class="xm-foot">
-    <div class="grp"><button class="ghost" id="xexit">Exit</button><button class="end" id="xend">${state.reviewing ? 'Submit exam' : 'End Exam'}</button></div>
-    <span class="prog">${answered} of ${n} answered${state.fb ? ` · ${correctSoFar} correct` : ''} · ${flagged} flagged</span>
-    <div class="grp"><button id="xprev" ${state.i === 0 || state.reviewing ? 'disabled' : ''} aria-label="Previous question">←<span class="lbl"> Previous</span></button><button class="primary" id="xnext" ${state.i === n - 1 || state.reviewing ? 'disabled' : ''}>Next →</button></div>
+    <button id="xprev" ${state.i === 0 && !state.reviewing ? 'disabled' : ''}>${state.reviewing ? '← Back to questions' : '← Previous'}</button>
+    <span class="prog">${answered === n && !state.reviewing ? 'All questions answered · ' : ''}${answered} of ${n} answered${state.fb ? ` · ${correctSoFar} correct` : ''} · ${flagged} flagged</span>
+    <button class="primary" id="xnext">${state.reviewing ? 'Submit exam' : state.i === n - 1 ? 'Review &amp; finish →' : 'Next →'}</button>
   </footer></div>`;
   app.querySelectorAll('.xo').forEach(b => b.onclick = () => examPick(+b.dataset.k));
   app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => examGo(+b.dataset.go));
   app.querySelectorAll('[data-flag]').forEach(c => c.onclick = () => toggleFlag(+c.dataset.flag));
   on('xflag', () => toggleFlag(state.i));
-  on('xprev', () => examGo(state.i - 1));
-  on('xnext', () => examGo(state.i + 1));
+  on('xprev', () => state.reviewing ? examGo(state.i) : examGo(state.i - 1));
+  on('xnext', () => state.reviewing ? examEndAsk() : state.i === n - 1 ? openReview() : examGo(state.i + 1));
   on('xend', () => state.reviewing ? examEndAsk() : openReview());
   on('xexit', () => modal('Exit the exam?', '<p>Choose <b>Save and exit</b> to come back later with the timer paused, or <b>Exit without saving</b> to abandon this attempt.</p>',
     [{label: 'Return to exam'}, {label: 'Exit without saving', danger: true, fn: () => { removeKey(PROGRESS_KEY); state.over = true; home(); }}, {label: 'Save and exit', primary: true, fn: () => { saveProgress(); state.over = true; home(); }}]));
